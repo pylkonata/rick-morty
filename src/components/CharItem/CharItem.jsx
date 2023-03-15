@@ -1,14 +1,19 @@
-import charImg from '../../assets/img/char-example.jpg';
-
 import './CharItem.scss';
+import { useNavigate } from 'react-router-dom';
 
-const CharItem = () => {
+const CharItem = ({ char }) => {
+  const { id, name, image, species } = char;
+  const navigate = useNavigate();
+  const onCharClicked = () => {
+    navigate(`${id}`);
+  };
+
   return (
-    <li className='char-item'>
-      <img src={charImg} alt='some char' className='char-item__img' />
+    <li className='char-item' onClick={onCharClicked}>
+      <img src={image} alt='some char' className='char-item__img' />
       <div className='char-item__text-wrap'>
-        <h3 className='char-item__name'>Rick Sanchez</h3>
-        <p className='char-item__species'>human</p>
+        <h3 className='char-item__name'>{name}</h3>
+        <p className='char-item__species'>{species}</p>
       </div>
     </li>
   );

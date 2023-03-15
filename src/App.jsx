@@ -12,6 +12,7 @@ function App() {
         <Route path='/'>
           <Route index element={<HomePage />} />
           <Route path=':charId' element={<SingleCharPage />} />
+          <Route path='*' element={<div>Error</div>} />
         </Route>
         <Route path='*' element={<div>Error</div>} />
       </Routes>

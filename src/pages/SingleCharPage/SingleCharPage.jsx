@@ -4,11 +4,15 @@ import { useState, useEffect } from 'react';
 import './SingleCharPage.scss';
 
 import Spinner from '../../components/Spinner/Spinner';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+
 import { fetchChar } from '../../services/fetchData';
 
 const SingleCharPage = (props) => {
   const [char, setChar] = useState();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   const { charId } = useParams();
 
   useEffect(() => {
@@ -16,13 +20,22 @@ const SingleCharPage = (props) => {
   }, [charId]);
 
   const onFetchChar = async () => {
-    await fetchChar(charId)
-      .then((data) => setChar(data))
-      .then(onCharLoaded)
-      .catch((error) => console.log(error));
+    await fetchChar(charId).then(onCharLoaded).catch(onError);
   };
 
-  const onCharLoaded = () => setLoading(false);
+  const onCharLoaded = (char) => {
+    setChar(char);
+    setLoading(false);
+  };
+
+  const onError = () => {
+    setError(true);
+    setLoading(false);
+  };
+
+  const errorMessage = error ? <ErrorMessage /> : null;
+  const spinner = loading ? <Spinner /> : null;
+  const content = !(error || loading) ? <View char={char} /> : null;
 
   return (
     <div className='single-char__page'>
@@ -30,7 +43,9 @@ const SingleCharPage = (props) => {
         <p className='single-char__arrow'></p>
         Go back
       </Link>
-      {loading ? <Spinner /> : <View char={char} />}
+      {errorMessage}
+      {spinner}
+      {content}
     </div>
   );
 };
@@ -39,7 +54,7 @@ const View = ({ char }) => {
   const { image, name, gender, status, species, origin, type } = char;
   return (
     <div className='single-char'>
-      <img src={image} alt='char' className='single-char__img' />
+      <img src={image} alt={name} className='single-char__img' />
       <h2 className='single-char__name'>{name}</h2>
       <div className='single-char__info'>
         <h3 className='single-char__info-title'>Informations</h3>

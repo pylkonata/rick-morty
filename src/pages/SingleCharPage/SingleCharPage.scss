@@ -3,52 +3,58 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px 50px 30px;
+  padding: 1rem;
 
   .single-char__back {
-    width: 108px;
-    height: 24px;
+    min-width: 6.75rem;
+    min-height: 1.5rem;
     display: flex;
-    gap: 8px;
+    gap: 0.5rem;
     font-family: 'Karla';
     font-style: normal;
     font-weight: 700;
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 1.125rem;
+    line-height: 1.33;
     color: #000000;
     text-transform: uppercase;
     align-self: start;
 
     .single-char__arrow {
-      width: 24px;
-      height: 24px;
+      width: 1.5rem;
+      height: 1.5rem;
       background: no-repeat url('../../assets/img/arrow_back_24px.png');
     }
   }
   .single-char {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 3.125rem;
 
     &__img {
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;    
+      max-width: 300px;
+      max-height: 300px;
+      border-radius: 50%;
+      align-self: center;      
     }
+    
     &__name {
-      font-size: 48px;
-      line-height: 56px;
+      font-size: 3rem;
+      line-height: 1.17;
       color: #081F32;
-      margin-top: 16px;
+      margin-top: 1rem;
+      text-align: center;
     }
+    
     &__info {
       margin-top: 28px;
       display: flex;
       flex-direction: column;
-      gap: 38px;
+      gap: 2rem;
     }
     &__info-title {
       font-weight: 500;
-      font-size: 20px;
-      line-height: 24px;
+      font-size: 1.25rem;
+      line-height: 1.2;
       letter-spacing: 0.15px;
       color: #8E8E93;
       align-self: center;
@@ -62,18 +68,28 @@
       height: 64px;
       justify-content: center;
       font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
+      font-size: 1.14rem;
+      line-height: 1.25;
       letter-spacing: 0.25px;
       color: #6E798C;
       border-bottom: 1px solid rgba(33, 33, 33, 0.08);
     }
     &__item_bold {
       font-weight: 700;
-      font-size: 16px;
-      line-height: 24px;
+      font-size: 1rem;
+      line-height: 1.5;
       letter-spacing: 0.15px;
       color: #081F32;
     }
+    @media (max-width: 767px){
+      .single-char__img {
+        max-width: 150px;
+      }
+      .single-char__name {
+        font-size: 1.5rem;
+      }
+    }
   }
 }
+
+

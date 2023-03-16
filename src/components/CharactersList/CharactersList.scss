@@ -1,26 +1,25 @@
 .chars__wrap {
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
   width: 100%;
 
   .chars__list {
     display: grid;
     grid-template-columns: repeat(auto-fill, 240px);
-    justify-content: space-between;
-    gap: 25px 20px;
-    grid-template-rows: 244px;
+    justify-content: space-evenly;
+    gap: 1.5rem 1.25rem;
+    grid-auto-rows: 244px;
   }
 
   .btn {
     min-width: 101px;
-    padding: 8px 18px;
-    margin-top: 20px;
+    padding: 0.5rem 1.125rem;
+    margin-top: 1.25rem;
     align-self: center;
     background-color: #00b0c8;
     border: none;
-    border-radius: 5px;   
-    font-size: 14px;    
+    border-radius: 0.3rem;   
+    font-size: 0.875rem;    
     text-align: center;
     text-transform: uppercase;
     color: #ffffff;   
@@ -32,5 +31,10 @@
       transition: all 0.3s;
     }
   }
-  
+  @media (max-width: 767px){
+    .chars__list {
+      grid-auto-rows: 308px;
+      grid-template-columns: 312px;
+    }
+  }
 }

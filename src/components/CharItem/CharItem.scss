@@ -37,4 +37,10 @@
     transition: all 0.5s ease-in-out;
     box-shadow: 0px 5px 5px rgb(154, 253, 133), 0px 3px 4px rgba(154, 253, 133), 0px 2px 4px rgba(154, 253, 133);
   }
+  @media (max-width: 767px){
+    .char-item__img {
+      max-width: 312px;
+      max-height: 232px;
+    }
+  }
 }

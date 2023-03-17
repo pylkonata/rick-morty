@@ -25,19 +25,21 @@ const HomePage = ({ onCharSelected }) => {
   }, [search]);
 
   useEffect(() => {
-    window.google.accounts.id.initialize({
-      client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-      callback: handleCredentialResponse,
-    });
-    window.google.accounts.id.renderButton(
-      document.getElementById('logInBtn'),
-      {
-        theme: 'filled_blue',
-        size: 'small',
-        text: 'signin_with',
-        locale: 'en_US',
-      }
-    );
+    if (!isLoggedIn) {
+      window.google.accounts.id.initialize({
+        client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        callback: handleCredentialResponse,
+      });
+      window.google.accounts.id.renderButton(
+        document.getElementById('logInBtn'),
+        {
+          theme: 'filled_blue',
+          size: 'small',
+          text: 'signin_with',
+          locale: 'en_US',
+        }
+      );
+    }
   }, [isLoggedIn]);
 
   const handleCredentialResponse = (response) => {

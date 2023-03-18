@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './CharactersList.scss';
 
 import CharItem from '../CharItem/CharItem';
@@ -21,6 +21,8 @@ const CharactersList = ({ search }) => {
   const [error, setError] = useState(false);
   const [ended, setEnded] = useState(false);
   const [page, setPage] = useState(savePage);
+
+  let refScroll = useRef();
 
   useEffect(() => {
     if (!localStorage.getItem('page')) {
@@ -60,7 +62,16 @@ const CharactersList = ({ search }) => {
     saveChars = charsList.concat(data);
   };
 
+  const scrollTo = (num) => {
+    window.scrollTo({
+      behavior: 'smooth',
+      top: refScroll,
+    });
+  };
+
   const onLoadMore = async (id) => {
+    refScroll = window.scrollY;
+
     onCharsListLoaded();
     await loadChars(id)
       .then(updateCharList)
@@ -69,10 +80,10 @@ const CharactersList = ({ search }) => {
 
     updatePage();
     saveToLocalStorage();
-
     if (page + 1 === 42) {
       setEnded(true);
     }
+    scrollTo(refScroll);
   };
 
   const sortedList = charsList

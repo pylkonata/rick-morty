@@ -39,7 +39,7 @@ const SingleCharPage = (props) => {
 
   return (
     <div className='single-char__page'>
-      <Link to='..' className='single-char__back'>
+      <Link to='..' className='single-char__back single-char__back_hide'>
         <p className='single-char__arrow'></p>
         Go back
       </Link>
@@ -80,6 +80,10 @@ const View = ({ char }) => {
             {type ? type : 'Uknown'}
           </li>
         </ul>
+        <Link to='..' className='single-char__back'>
+          <p className='single-char__arrow'></p>
+          Go back
+        </Link>
       </div>
     </div>
   );

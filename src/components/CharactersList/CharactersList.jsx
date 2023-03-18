@@ -32,10 +32,14 @@ const CharactersList = ({ search }) => {
   }, []);
 
   const onFetch = () => {
+    refScroll = window.scrollY;
+
     loadChars()
       .then((data) => setCharsList(data))
       .then(onCharsListLoaded)
       .catch(onError);
+
+    scrollTo(refScroll);
   };
 
   const onCharsListLoaded = () => {

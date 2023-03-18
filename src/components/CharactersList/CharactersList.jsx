@@ -87,7 +87,6 @@ const CharactersList = ({ search }) => {
     if (page + 1 === 42) {
       setEnded(true);
     }
-    scrollTo(refScroll);
   };
 
   const sortedList = charsList
@@ -113,7 +112,10 @@ const CharactersList = ({ search }) => {
       <button
         style={styledBtn}
         className='btn'
-        onClick={() => onLoadMore(page)}
+        onClick={() => {
+          onLoadMore(page);
+          scrollTo(refScroll);
+        }}
       >
         load more
       </button>

@@ -8,12 +8,25 @@ const fetchData = async (url) => {
   return await res.json();
 };
 
-export const fetchAllChars = async () => {
-  const res = await fetchData(`${_apiUrlBase}character`);
-  return res.results;
-};
-
 export const fetchChar = async (id) => {
   const res = await fetchData(`${_apiUrlBase}character/${id}`);
-  return await res;
+  return await transformChar(res);
+};
+
+export const loadChars = async (id = 1) => {
+  const res = await fetchData(`${_apiUrlBase}character/?page=${id}`);
+  return await res.results.map(transformChar);
+};
+
+const transformChar = (char) => {
+  return {
+    id: char.id,
+    name: char.name,
+    image: char.image,
+    gender: char.gender,
+    status: char.status,
+    species: char.species,
+    origin: char.origin,
+    type: char.type,
+  };
 };

@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode';
 import CharactersList from '../../components/CharactersList/CharactersList';
 import SearchBar from '../../components/SearchBar/SearchBar';
 
-const HomePage = ({ onCharSelected }) => {
+const HomePage = () => {
   let startSearch = localStorage.getItem('search')
     ? localStorage.getItem('search')
     : '';
@@ -47,19 +47,27 @@ const HomePage = ({ onCharSelected }) => {
     setUser(responsePayload);
     setIsLoggedIn(true);
   };
+
   const onLogOut = () => {
     window.google.accounts.id.revoke(user.sub);
     setIsLoggedIn(false);
   };
 
+  const onScroll = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  };
   return (
     <div className='home-page'>
-      <header className='header'>
+      <header className='header' id='header'>
         <nav className='header__nav'>
           {isLoggedIn ? (
             <p className='header__text'>
               Welcome,
-              <span> {user.name}</span>
+              <span> {user.name}!</span>
             </p>
           ) : (
             <div id='logInBtn'></div>
@@ -74,6 +82,9 @@ const HomePage = ({ onCharSelected }) => {
       </header>
       <SearchBar onSearch={onSearch} startSearch={startSearch} />
       <CharactersList search={search} />
+      <button className='scroll-top__btn' onClick={onScroll}>
+        Top
+      </button>
     </div>
   );
 };

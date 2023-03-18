@@ -5,32 +5,74 @@ import CharItem from '../CharItem/CharItem';
 import Spinner from '../Spinner/Spinner';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
-import { fetchAllChars } from '../../services/fetchData';
+import { loadChars } from '../../services/fetchData';
 import { findChars } from '../../helpers/findChar';
 
 const CharactersList = ({ search }) => {
-  const [charsList, setCharsList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  let savePage = localStorage.getItem('page')
+    ? +localStorage.getItem('page')
+    : 2;
+  let saveChars = localStorage.getItem('chars')
+    ? JSON.parse(localStorage.getItem('chars'))
+    : [];
+
+  const [charsList, setCharsList] = useState(saveChars);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [ended, setEnded] = useState(false);
+  const [page, setPage] = useState(savePage);
 
   useEffect(() => {
-    onFetch();
+    if (!localStorage.getItem('page')) {
+      onCharsListLoaded();
+      onFetch();
+    }
   }, []);
 
   const onFetch = () => {
-    fetchAllChars()
+    loadChars()
       .then((data) => setCharsList(data))
       .then(onCharsListLoaded)
       .catch(onError);
   };
 
   const onCharsListLoaded = () => {
-    setLoading(false);
+    setLoading((prev) => !prev);
   };
 
   const onError = () => {
     setError(true);
     setLoading(false);
+  };
+
+  const saveToLocalStorage = () => {
+    localStorage.setItem('page', savePage);
+    localStorage.setItem('chars', JSON.stringify(saveChars));
+  };
+
+  const updatePage = () => {
+    savePage = +page + 1;
+    setPage((prev) => prev + 1);
+  };
+
+  const updateCharList = (data) => {
+    setCharsList((prev) => [...prev, ...data]);
+    saveChars = charsList.concat(data);
+  };
+
+  const onLoadMore = async (id) => {
+    onCharsListLoaded();
+    await loadChars(id)
+      .then(updateCharList)
+      .then(onCharsListLoaded)
+      .catch(onError);
+
+    updatePage();
+    saveToLocalStorage();
+
+    if (page + 1 === 42) {
+      setEnded(true);
+    }
   };
 
   const sortedList = charsList
@@ -46,13 +88,20 @@ const CharactersList = ({ search }) => {
   const errorMessage = error ? <ErrorMessage /> : null;
   const spinner = loading ? <Spinner /> : null;
   const content = !(error || loading) ? charListItems : null;
+  const styledBtn = ended ? { display: 'none' } : { display: 'block' };
 
   return (
     <div className='chars__wrap'>
       {errorMessage}
       {spinner}
       <ul className='chars__list'>{content}</ul>
-      <button className='btn'>load more</button>
+      <button
+        style={styledBtn}
+        className='btn'
+        onClick={() => onLoadMore(page)}
+      >
+        load more
+      </button>
     </div>
   );
 };

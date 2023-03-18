@@ -9,7 +9,6 @@ const SearchBar = ({ onSearch, startSearch }) => {
     const value = e.target.value;
     onSearch(value);
     setSearch(value);
-    console.log(search);
   };
 
   return (

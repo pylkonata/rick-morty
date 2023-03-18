@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import './CharactersList.scss';
 
 import CharItem from '../CharItem/CharItem';
@@ -22,8 +22,6 @@ const CharactersList = ({ search }) => {
   const [ended, setEnded] = useState(false);
   const [page, setPage] = useState(savePage);
 
-  let refScroll = useRef();
-
   useEffect(() => {
     if (!localStorage.getItem('page')) {
       onCharsListLoaded();
@@ -32,14 +30,10 @@ const CharactersList = ({ search }) => {
   }, []);
 
   const onFetch = () => {
-    refScroll = window.scrollY;
-
     loadChars()
       .then((data) => setCharsList(data))
       .then(onCharsListLoaded)
       .catch(onError);
-
-    scrollTo(refScroll);
   };
 
   const onCharsListLoaded = () => {
@@ -66,16 +60,7 @@ const CharactersList = ({ search }) => {
     saveChars = charsList.concat(data);
   };
 
-  const scrollTo = (num) => {
-    window.scrollTo({
-      behavior: 'smooth',
-      top: refScroll,
-    });
-  };
-
   const onLoadMore = async (id) => {
-    refScroll = window.scrollY;
-
     onCharsListLoaded();
     await loadChars(id)
       .then(updateCharList)
@@ -112,10 +97,7 @@ const CharactersList = ({ search }) => {
       <button
         style={styledBtn}
         className='btn'
-        onClick={() => {
-          onLoadMore(page);
-          scrollTo(refScroll);
-        }}
+        onClick={() => onLoadMore(page)}
       >
         load more
       </button>

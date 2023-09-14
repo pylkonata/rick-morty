@@ -1,17 +1,17 @@
-import "./App.scss";
+import './App.scss';
 
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
 
-import HomePage from "./pages/HomePage/HomePage";
-import SingleCharPage from "./pages/SingleCharPage/SingleCharPage";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
-import ErrorBoundary from "./components/errorBoundary/ErrorBoundary";
+import HomePage from './pages/HomePage/HomePage';
+import SingleCharPage from './pages/SingleCharPage/SingleCharPage';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
 
 function App() {
   return (
-    <div className="app">
+    <div className='app'>
       <Routes>
-        <Route path="/">
+        <Route path='/'>
           <Route
             index
             element={
@@ -20,8 +20,8 @@ function App() {
               </ErrorBoundary>
             }
           />
-          <Route path=":charId" element={<SingleCharPage />} />
-          <Route path="*" element={<ErrorMessage />} />
+          <Route path=':charId' element={<SingleCharPage />} />
+          <Route path='*' element={<ErrorMessage />} />
         </Route>
       </Routes>
     </div>

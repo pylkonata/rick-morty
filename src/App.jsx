@@ -20,7 +20,7 @@ function App() {
               </ErrorBoundary>
             }
           />
-          {/* <Route path=':charId' element={<SingleCharPage />} /> */}
+          <Route path=":charId" element={<SingleCharPage />} />
           <Route path="*" element={<ErrorMessage />} />
         </Route>
       </Routes>
